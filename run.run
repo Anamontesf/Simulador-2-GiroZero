@@ -1,0 +1,72 @@
+ reset; 
+ 
+ model param.mod; 
+ model model.mod; 
+
+ data P.dat;
+ data 1.dat; 
+ data 2.dat; 
+ data Opt.dat;
+ #data Med.dat;
+ #data Pes.dat;
+ 
+ 
+ 
+
+option show_stats 1;
+option omit_zero_rows 1;
+option omit_zero_cols 1;
+
+option solver gurobi; 
+option gurobi_options 'outlev=1 mipgap=0.5';
+
+problem ESC1:Y,X,Z,W,FLOW,KM,ASSET,CO2,M1,TC,F,D,A,M,B,B1,B2,B3,B4,BUY,AGE,NPV,R1a, R0a, R0b, R1b, R5a, R5b, R5c, R9, R10a, R10c, 10b, R12a, R12b, R12c, R12d, R12e, R12f, 13a, 13C, R14, R31c, R31a, R31d, R41b, R41a, R41c, R41d, R4, R6, R11, R2a, R18, R19, R51, R21, R6b, R3b, R3a, R2b, R20, R20b, R20c, R22a;
+solve ESC1;
+#problem ESC1:Y,X,Z,W,FLOW,KM,ASSET,CO2,M1,TC,F,D,A,M,B,B1,B2,B3,B4,BUY,AGE,NPV,R1a, R0a, R0b, R1b, R5a, R5b, R5c, R9, R10a, R10c, 10b, R12a, R12b, R12c, R12d, R12e, R12f, 13a, 13C, R14, R31c, R31a, R31d, R41b, R41a, R41c, R41d, R4, R6, R11, R2a, R18, R19, R51, R6b, R3b, R3a, R2b, R20,RNEW;
+#solve ESC1;
+param SumCO2{t in 0..T};
+param Fuel{t in 0..T};
+param Manag{t in 0..T};
+param Maint{t in 0..T};
+param Asset{t in 0..T+1};
+param TaxSav{t in 0..T};
+
+param periodo8;
+param periodo28;
+param FunObj;
+param purcha{v in 1..Veh,i in I};
+param sell{v in 1..Veh,i in I};
+for {t in 0..T}{
+	let SumCO2[t]:=sum{i in I}F[i,t]*(1/((1+WACC)^t));
+	let Fuel[t]:=sum{i in I}F[i,t]*(1/((1+WACC)^t));
+	let Manag[t]:=sum{i in I}A[i,t]*(1/((1+WACC)^t));
+	let Maint[t]:=sum{i in I}M[i,t]*(1/((1+WACC)^t));
+	let Asset[t]:=sum{i in I}B[i,t]*(1/((1+WACC)^t))+sum{i in I}B[i,T+1]*(1/((1+WACC)^(T+1)));
+	let TaxSav[t]:=sum{i in I}D[i,t]*(1/((1+WACC)^t));
+}
+let periodo8:=sum{i2 in I}CO2[i2,96];
+let periodo28:=sum{i2 in I}CO2[i2,336];
+let FunObj:=NPV;
+
+for {v in 1..Veh}{
+	for {i in I}{
+		for {t in 0..T}{
+			if (Y[v,i,t] > 0) then {
+				let purcha[v,i]:=t;
+			}
+		}
+		for {t in 1..T+1}{
+			if (X[v,i,t] > 0) then {
+				let sell[v,i]:=t;
+			}
+		}
+	}
+}
+display purcha, sell;
+print "COP/KM: " & sum{t in 0..T, i in I} (10^6)*FLOW[i,t]*(1/((1+INF)^t))/sum{v in 1..Veh, t1 in 0..T, i1 in I}KM[v,i1,t1];
+print "TAXES: " & sum{i in I, t in 0..T}TC[i,t]/1000000;
+print "Fuel: " & sum{t in 0..T, i in I}F[i,t]*(1/((1+WACC)^t));
+print "Manag: " & sum{t in 0..T, i in I}A[i,t]*(1/((1+WACC)^t));
+print "Maint: " & sum{t in 0..T, i in I}M[i,t]*(1/((1+WACC)^t));
+print "Asset: " & sum{t in 0..T, i in I}B[i,t]*(1/((1+WACC)^t))+sum{i in I}B[i,T+1]*(1/((1+WACC)^(T+1)));
+print "TaxSav: " & sum{t in 0..T, i in I}D[i,t]*(1/((1+WACC)^t));

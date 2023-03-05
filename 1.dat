@@ -1,0 +1,41 @@
+param T:= 336; 
+set I:= ELE HID DIE GAS; 
+set FT:= LEAS LOAN PAID;
+
+param:	WTT	TTW=
+HID	6767	0
+ELE	203		0
+GAS	511		1952
+DIE	5401	10133
+;
+
+param FM:=
+DIE	1.00
+ELE	0.59
+HID	1.05
+GAS	0.91
+;
+
+param GDEP1:=0;
+
+param COP21:=0.45;
+
+param OMEGA:=0.00179;
+
+param EFF:1 2 3= 
+HID	31.86	17.53	17.38
+ELE 1.23	0.69	0.66
+GAS	3.52	2.06	2.61
+DIE	16.25	10.62	13.52
+;
+
+param TONNES= 
+1 4.85	
+2 13.46	
+3 25.56;
+
+param DELTA:=
+1 114
+2 174
+3 227
+; 

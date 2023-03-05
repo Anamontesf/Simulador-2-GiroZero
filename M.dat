@@ -1,0 +1,37 @@
+param TYPE:=2;
+param NAC:=0;
+
+# Mediano
+
+param KM_0:= 20000;
+param KMD:=464;
+param OPD:=26;
+param LIM2:=16;
+
+param PVEH:= 
+DIE 150
+ELE 303
+GAS 150
+HID 457
+;
+
+param OPEXBUDGET:=9999999999;
+param CAPEXBUDGET:=9999999999;
+
+param INV:1 2 3 4 5= 
+DIE 1 0 0 0 0
+ELE 0 0 0 0 0
+GAS 1 0 0 0 0
+HID 0 0 0 0 0
+;
+
+param AGE_0:1 2 3 4 5= 
+DIE 8 0 0 0 0
+ELE 0 0 0 0 0
+GAS 5 0 0 0 0
+HID 0 0 0 0 0
+;
+
+param KMGAL:=6.1;
+param TONTRIP:=13.46;
+param CM_0:=542;

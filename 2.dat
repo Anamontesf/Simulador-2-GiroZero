@@ -1,0 +1,38 @@
+#Financials
+
+param WACC1:=0.20; 
+param EMP:=1;
+
+param n:=
+PAID	0
+LOAN	120
+LEAS	120
+;
+
+param r1:=
+PAID	0
+LOAN	0.1
+LEAS	0.1
+;
+
+
+param P:1 2 3=
+PAID	1 	0 	0
+LOAN	0.3	0.7	0.0
+LEAS	0.1 0.6	0.3
+;
+
+param CF_0:=
+HID	23738
+ELE	253
+GAS	1986
+DIE	9018
+;  
+
+
+param RG1:=0.025;
+
+param DPED:=10;
+
+param IMP:=0.3;
+

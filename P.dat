@@ -1,0 +1,28 @@
+param TYPE:=3;
+param NAC:=0; 
+param KM_0:=30000; 
+param KMD:=727; 
+param OPD:=26; 
+param LIM2:=8; 
+param PVEH:= 
+DIE 713 
+ELE 927 
+GAS 465 
+HID 1390; 
+param OPEXBUDGET:=9999999999; 
+param CAPEXBUDGET:=9999999999; 
+param KMGAL:=5.25; 
+param TONTRIP:=25.56; 
+param CM_0:=708;
+param INV:1 2 3 4 5 6 7 8 9 10=
+DIE 1 0 0 0 0 0 0 0 0 0
+ELE 1 0 0 0 0 0 0 0 0 0
+GAS 1 0 0 0 0 0 0 0 0 0
+HID 1 0 0 0 0 0 0 0 0 0
+;
+param AGE_0:1 2 3 4 5 6 7 8 9 10=
+DIE 5 0 0 0 0 0 0 0 0 0
+ELE 4 0 0 0 0 0 0 0 0 0
+GAS 3 0 0 0 0 0 0 0 0 0
+HID 7 0 0 0 0 0 0 0 0 0
+;
